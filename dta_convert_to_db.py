@@ -3,7 +3,8 @@ import os
 import sqlite3
 
 
-folder_path = '2020/'
+# 读取的文件仓库
+folder_path = '2018/'
 conn = sqlite3.connect('my_database.db')
 for root, dirs, files in os.walk(folder_path):
     for file in files:
@@ -11,7 +12,7 @@ for root, dirs, files in os.walk(folder_path):
             continue
         file_path = root + file
         data_read = pd.read_stata(file_path)
-        data_read.to_sql(file[:-4], conn, if_exists='replace', index=False)
+        data_read.to_sql(file[:-4], conn, if_exists='append', index=False)
         print(file[:-4])
         print("Data has been successfully stored in the SQLite database.")
 conn.close()
